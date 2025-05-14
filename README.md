@@ -1,6 +1,6 @@
 # 모두의 질문 Green Paper Viewer
 
-A modern web app to browse 시민들의 질문 from the "모두의 질문" project, visualized from the 공개된 green paper CSV data.
+A modern web app to browse 시민들의 질문 from the ["모두의 질문 Q" Green Paper](https://github.com/q4all/greenpaper)
 
 - Fetches and displays questions from the 공개 CSV on GitHub
 - Modern UI with Material UI
