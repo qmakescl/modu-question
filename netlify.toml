@@ -7,7 +7,7 @@
   port = 8888
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "22"
 
 [[redirects]]
   from = "/*"
