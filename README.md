@@ -1,4 +1,4 @@
-# 모두의 질문 Green Paper Viewer
+# 모두의 질문 Green Paper Data Viewer
 
 A modern web app to browse 시민들의 질문 from the ["모두의 질문 Q" Green Paper](https://github.com/q4all/greenpaper)
 
