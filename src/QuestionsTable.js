@@ -19,6 +19,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Papa from 'papaparse';
 
+// Load from local CSV with category
 const CSV_URL = 'https://raw.githubusercontent.com/q4all/greenpaper/refs/heads/main/2025%EB%85%84%20%EC%8B%9C%EC%A6%8C1/%EB%AA%A8%EB%91%90%EC%9D%98%EC%A7%88%EB%AC%B8Q%20%EC%8B%9C%EC%A6%8C1.csv';
 
 export default function QuestionsTable() {
@@ -53,13 +54,17 @@ export default function QuestionsTable() {
     });
   }, []);
 
+  // Include 'category' in search
   const filteredRows = rows.filter(row =>
-    columns.some(col => (row[col] || '').toLowerCase().includes(search.toLowerCase()))
+    columns.some(col => (row[col] || '').toLowerCase().includes(search.toLowerCase())) ||
+    (row['category'] || '').toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <>
       <Paper sx={{ width: '100%', minWidth: 600, overflow: 'auto' }}>
+        {/* 분류별 통계 시각화 */}
+        <CategoryStats rows={rows} />
         <Box sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
           <TextField
             label="질문 검색"
@@ -82,10 +87,11 @@ export default function QuestionsTable() {
           <TableContainer sx={{ maxHeight: 600 }}>
             <Table stickyHeader sx={{ width: '100%', minWidth: 600, maxWidth: '100vw', tableLayout: 'fixed' }}>
               <colgroup>
-                <col style={{ width: '6%' }} />
-                <col style={{ width: '18%' }} />
-                <col style={{ width: '62%' }} />
-                <col style={{ width: '14%' }} />
+                <col style={{ width: '7%' }} />   {/* 순서 seq */}
+                <col style={{ width: '21%' }} />  {/* 제목 title */}
+                <col style={{ width: '7%' }} />   {/* 분류 category */}
+                <col style={{ width: '43%' }} />  {/* 내용 contents */}
+                <col style={{ width: '7%' }} />   {/* 등록일자 register_dtm */}
               </colgroup>
               <TableHead>
                 <TableRow>
@@ -108,8 +114,18 @@ export default function QuestionsTable() {
               <TableBody>
                 {filteredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, idx) => (
                   <TableRow hover key={idx}>
-                    {columnOrder.map(col => {
-                      if (col.key === 'contents' && row[col.key]) {
+                    {columnOrder.map((col, colIdx) => {
+                      if (col.key === 'seq') {
+                        // Always show a sequence number
+                        return (
+                          <TableCell
+                            key={col.key}
+                            sx={{ width: '7%', minWidth: 0, textAlign: 'center', fontWeight: 500 }}
+                          >
+                            {row[col.key] || (page * rowsPerPage + idx + 1)}
+                          </TableCell>
+                        );
+                      } else if (col.key === 'contents') {
                         // Remove HTML tags for preview
                         const plainText = row[col.key].replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ');
                         const shortText = plainText.length > 100 ? plainText.slice(0, 100) + '…' : plainText;
@@ -117,7 +133,7 @@ export default function QuestionsTable() {
                           <TableCell
                             key={col.key}
                             sx={{
-                              width: col.key === 'seq' ? '6%' : col.key === 'title' ? '18%' : col.key === 'contents' ? '62%' : '14%',
+                              width: '43%',
                               minWidth: 0,
                               whiteSpace: 'nowrap',
                               overflow: 'hidden',
@@ -136,12 +152,22 @@ export default function QuestionsTable() {
                             {shortText}
                           </TableCell>
                         );
+                      } else if (col.key === 'category') {
+                        // Center-align category
+                        return (
+                          <TableCell
+                            key={col.key}
+                            sx={{ width: '7%', minWidth: 0, textAlign: 'center', fontWeight: 500 }}
+                          >
+                            {row[col.key]}
+                          </TableCell>
+                        );
                       } else if (col.key === 'title') {
                         return (
                           <TableCell
                             key={col.key}
                             sx={{
-                              width: '18%',
+                              width: '21%',
                               minWidth: 0,
                               whiteSpace: 'nowrap',
                               overflow: 'hidden',
@@ -159,7 +185,7 @@ export default function QuestionsTable() {
                         return (
                           <TableCell
                             key={col.key}
-                            sx={{ width: '14%', minWidth: 0, whiteSpace: 'nowrap', boxSizing: 'border-box' }}
+                            sx={{ width: '7%', minWidth: 0, whiteSpace: 'nowrap', boxSizing: 'border-box' }}
                           >
                             {date}
                           </TableCell>

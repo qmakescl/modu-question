@@ -32,6 +32,15 @@ export default function Home() {
         <Paper elevation={0} sx={{ p: { xs: 1, sm: 3 }, width: '100%', borderRadius: 3, boxShadow: '0 2px 16px 0 rgba(60,72,88,.08)', bgcolor: '#fff' }}>
           <QuestionsTable />
         </Paper>
+        <Box sx={{ width: '100%', mt: 1, mb: 2, display: 'flex', justifyContent: 'center' }}>
+          <Typography variant="caption" sx={{ color: '#666', fontSize: 13, textAlign: 'center' }}>
+            본 사이트의 분류는 Huggingface의 네이버 HyperCLOVAX-SEED-Text-Instruct-1.5B 모델을 양자화한 {' '}
+            <a href="https://huggingface.co/mradermacher/HyperCLOVAX-SEED-Text-Instruct-1.5B-hf-i1-GGUF" target="_blank" rel="noopener noreferrer" style={{ color: '#1976d2', textDecoration: 'underline' }}>
+              HyperCLOVAX-SEED-Text-Instruct-1.5B-hf-i1-GGUF
+            </a>
+            {' '}모델을 LM Studio를 통해 구했습니다.
+          </Typography>
+        </Box>
       </Box>
       {/* Footer: Code Source */}
       <Box sx={{ width: '100%', mt: 6, mb: 2, display: 'flex', justifyContent: 'center' }}>
