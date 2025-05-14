@@ -20,10 +20,10 @@ export default function Home() {
             </Typography>
           </Box>
           <a href="https://github.com/q4all/greenpaper" target="_blank" rel="noopener noreferrer" style={{ color: '#1976d2', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
-            <FontAwesomeIcon icon={faGithub} style={{ fontSize: 22, marginRight: 6 }} />
             <Typography variant="caption" sx={{ color: '#888', fontSize: 15, fontWeight: 500 }}>
-              모두의 질문 Q - Green Paper
+            데이터 출처 - 모두의 질문 Q - Green Paper
             </Typography>
+            <FontAwesomeIcon icon={faGithub} style={{ fontSize: 22, marginRight: 6 }} />
           </a>
         </Box>
       </Box>
@@ -32,6 +32,14 @@ export default function Home() {
         <Paper elevation={0} sx={{ p: { xs: 1, sm: 3 }, width: '100%', borderRadius: 3, boxShadow: '0 2px 16px 0 rgba(60,72,88,.08)', bgcolor: '#fff' }}>
           <QuestionsTable />
         </Paper>
+      </Box>
+      {/* Footer: Code Source */}
+      <Box sx={{ width: '100%', mt: 6, mb: 2, display: 'flex', justifyContent: 'center' }}>
+        <Typography variant="caption" sx={{ color: '#aaa', fontSize: 13, textAlign: 'center' }}>
+          Code from <a href="https://github.com/qmakescl/modu-question" target="_blank" rel="noopener noreferrer" style={{ color: '#1976d2', textDecoration: 'underline' }}>
+            https://github.com/qmakescl/modu-question
+          </a> under CC0
+        </Typography>
       </Box>
     </Box>
   );
